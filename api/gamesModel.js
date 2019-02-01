@@ -1,11 +1,15 @@
-const db = [];
+const db = require('../data/dbConfig.js');
 
-exports.get = () => {
-    return db;
+exports.getAll = () => {
+    return db('games');
 };
 
-exports.post = () => {
-    return data => {
-        db.push(data);
-    };
+exports.insert = data => {
+    return db('games')
+        .insert(data)
+        .then(([id]) => {
+            return db('games')
+                .where({ id })
+                .first();
+        });
 };
