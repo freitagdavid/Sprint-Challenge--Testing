@@ -13,5 +13,22 @@ describe('server.js', () => {
             expect(response.type).toMatch(/json/i);
         });
     });
-    describe('POST /api/games', () => {});
+    describe('POST /api/games', () => {
+        it('Respond with status code 201', async () => {
+            let response = await request(server).post('/api/games', {
+                title: 'Zork',
+                genre: 'Text base adventure',
+                releaseYear: 1977,
+            });
+            expect(response.status).toBe(201);
+        });
+        it('Respond with updated data', async () => {
+            let response = await request(server).post('/api/games', {
+                title: 'Zork',
+                genre: 'Text base adventure',
+                releaseYear: 1977,
+            });
+            expect(response.type).toMatch(/json/i);
+        });
+    });
 });
