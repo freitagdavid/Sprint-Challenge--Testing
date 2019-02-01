@@ -5,15 +5,21 @@ const server = express();
 server.use(express.json());
 
 server.get('/api/games', (req, res) => {
-    const data = games.get();
-    res.status(200).json(data);
+    games.getAll().then(data => {
+        res.status(200).json(data);
+    });
 });
 
 server.post('/api/games', (req, res) => {
     const game = req.body;
-    response = games.post(game);
-    console.log(response);
-    res.status(201).json(response);
+    games
+        .insert(game)
+        .then(data => {
+            res.status(201).json(data);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
 });
 
 module.exports = server;
